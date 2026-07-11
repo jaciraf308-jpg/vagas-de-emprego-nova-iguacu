@@ -54,9 +54,10 @@ nav a:hover {
 
 .hero {
   padding: 4rem 0;
-  background: linear-gradient(140deg, #2563eb 0%, #0ea5e9 100%);
-  color: white;
-}
+   background: linear-gradient(140deg, rgba(37, 99, 235, 0.75) 0%, rgba(14, 165, 233, 0.75) 100%),
+     url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=1600&q=80');
+   background-size: cover;
+   background-position: center;
 
 .hero-content {
   display: grid;
