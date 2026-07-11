@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Vagas de emprego Nova Iguaçu - encontre oportunidades locais e remotas." />
+  <title>Vagas de Emprego Nova Iguaçu</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <div class="brand">
+        <h1>Vaga de Emprego Nova Iguaçu</h1>
+        <p>Encontre seu próximo emprego com facilidade</p>
+      </div>
+      <nav>
+        <a href="#vagas">Vagas</a>
+        <a href="#sobre">Sobre</a>
+        <a href="#contato">Contato</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container hero-content">
+      <div>
+        <h2>Oportunidades de emprego para você</h2>
+        <p>Explore vagas abertas em tecnologia, marketing, administração e muito mais.</p>
+        <a href="#vagas" class="primary-link">Vagas de Emprego Nova Iguaçu</a>
+      </div>
+      <div class="search-card">
+        <h3>Buscar vagas</h3>
+        <button id="toggle-add-job" type="button" class="secondary-button">Adicionar vaga</button>
+        <form id="search-form">
+          <label>
+            Palavras-chave
+            <input type="text" id="search-keyword" placeholder="Ex: desenvolvedor, analista" />
+          </label>
+          <label>
+            Localização
+            <input type="text" id="search-location" placeholder="Ex: remoto, São Paulo" />
+          </label>
+          <button type="submit">Buscar</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <main class="container">
+    <section id="vagas" class="section-vagas">
+      <div class="section-header">
+        <h2>Vagas recentes</h2>
+        <p>Veja as oportunidades disponíveis agora.</p>
+      </div>
+
+      <div id="add-job-panel" class="add-job-panel hidden">
+        <h3>Adicionar nova vaga</h3>
+        <form id="add-job-form" class="job-form">
+          <label class="form-group">
+            Título da vaga
+            <input type="text" id="job-title" placeholder="Ex: Desenvolvedor Back-end" required />
+          </label>
+          <label class="form-group">
+            Empresa
+            <input type="text" id="job-company" placeholder="Ex: Empresa XYZ" required />
+          </label>
+          <label class="form-group">
+            Localização
+            <input type="text" id="job-location" placeholder="Ex: Rio de Janeiro, RJ" required />
+          </label>
+          <label class="form-group">
+            Nível
+            <select id="job-type" required>
+              <option value="Júnior">Júnior</option>
+              <option value="Pleno">Pleno</option>
+              <option value="Sênior">Sênior</option>
+            </select>
+          </label>
+          <label class="form-group">
+            Imagem da vaga
+            <input type="file" id="job-image" accept="image/*" />
+          </label>
+          <label class="form-group">
+            Descrição
+            <textarea id="job-description" rows="4" placeholder="Descreva a vaga" required></textarea>
+          </label>
+          <button type="submit">Salvar vaga</button>
+        </form>
+      </div>
+
+      <div id="jobs-list" class="jobs-list"></div>
+    </section>
+
+    <section id="sobre" class="section-info">
+      <div>
+        <h2>Sobre o portal</h2>
+        <p>VagaFácil conecta candidatos e empresas com uma experiência simples e direta. Filtre por área, localização, nível e encontre a vaga ideal.</p>
+      </div>
+      <div class="features">
+        <article>
+          <h3>Fácil de usar</h3>
+          <p>Encontre vagas em poucos cliques e candidate-se rapidamente.</p>
+        </article>
+        <article>
+          <h3>Atualizações diárias</h3>
+          <p>Novas oportunidades adicionadas todos os dias.</p>
+        </article>
+        <article>
+          <h3>Vagas para todos</h3>
+          <p>Posições para profissionais experientes e recém-formados.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer id="contato" class="site-footer">
+    <div class="container footer-content">
+      <div>
+        <h2>Pronto para começar?</h2>
+        <p>Envie seu currículo e encontre oportunidades que combinam com seu perfil.</p>
+      </div>
+      <a href="mailto:contato@vagafacil.com">contato@vagafacil.com</a>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

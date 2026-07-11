@@ -1,0 +1,292 @@
+:root {
+  color-scheme: light;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #f7f9fc;
+  color: #1d2939;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.container {
+  width: min(1200px, calc(100% - 2rem));
+  margin: 0 auto;
+}
+
+.site-header {
+  background: #0f172a;
+  color: #fff;
+  padding: 1rem 0;
+}
+
+.site-header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.brand h1 {
+  margin: 0;
+  font-size: 1.75rem;
+}
+
+.brand p {
+  margin: 0.25rem 0 0;
+  color: #cbd5e1;
+}
+
+nav a {
+  color: #cbd5e1;
+  margin-left: 1.5rem;
+  text-decoration: none;
+}
+
+nav a:hover {
+  color: #fff;
+}
+
+.hero {
+  padding: 4rem 0;
+  background: linear-gradient(140deg, #2563eb 0%, #0ea5e9 100%);
+  color: white;
+}
+
+.hero-content {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 2rem;
+  align-items: center;
+}
+
+.hero h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  margin: 0 0 1rem;
+}
+
+.hero p {
+  max-width: 40rem;
+  margin: 0;
+}
+
+.search-card {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 1rem;
+  padding: 2rem;
+  backdrop-filter: blur(10px);
+}
+
+.search-card h3 {
+  margin-top: 0;
+}
+
+.search-card label {
+  display: block;
+  margin-bottom: 1rem;
+  color: #f8fafc;
+}
+
+.search-card input {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.14);
+  color: white;
+}
+
+.search-card button,
+  .add-job-panel button {
+    width: 100%;
+    padding: 0.95rem 1rem;
+    border: 0;
+    border-radius: 0.75rem;
+    background: #38bdf8;
+    color: #0f172a;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .search-card button:hover,
+  .add-job-panel button:hover {
+    background: #7dd3fc;
+  }
+
+  .secondary-button {
+    width: auto;
+    margin-bottom: 1rem;
+    padding: 0.85rem 1rem;
+    background: #64748b;
+    color: white;
+  }
+
+  .secondary-button:hover {
+    background: #475569;
+  }
+
+  .add-job-panel {
+    background: white;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 20px 45px rgba(15, 23, 42, 0.06);
+  }
+
+  .add-job-panel.hidden {
+    display: none;
+  }
+
+  .job-form {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .form-group {
+    display: block;
+  }
+
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    margin-top: 0.5rem;
+    border-radius: 0.75rem;
+    border: 1px solid #cbd5e1;
+    background: #f8fafc;
+    color: #0f172a;
+  }
+
+  .form-group textarea {
+    resize: vertical;
+  }
+
+.section-vagas,
+.section-info {
+  padding: 4rem 0;
+}
+
+.section-header h2 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.section-header p {
+  margin: 0;
+  color: #475569;
+}
+
+.jobs-list {
+  display: grid;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.job-card {
+  background: white;
+  border-radius: 1rem;
+  padding: 1.8rem;
+  box-shadow: 0 20px 60px rgba(15, 23, 42, 0.08);
+}
+
+.job-card img {
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: 1rem;
+  margin-bottom: 1rem;
+}
+
+.job-card h3 {
+  margin: 0 0 0.5rem;
+}
+
+.job-card p {
+  margin: 0.35rem 0;
+  color: #475569;
+}
+
+.job-card .meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.meta span {
+  background: #eef2ff;
+  color: #3730a3;
+  padding: 0.5rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+}
+
+.section-info {
+  display: grid;
+  gap: 2rem;
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.features article {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.06);
+}
+
+.site-footer {
+  background: #020617;
+  color: #cbd5e1;
+  padding: 2.5rem 0;
+}
+
+.footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.footer-content a {
+  color: #38bdf8;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+@media (max-width: 900px) {
+  .hero-content,
+  .footer-content,
+  .site-header .container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  nav a {
+    margin-left: 0;
+    margin-right: 1rem;
+  }
+}
+
+@media (max-width: 680px) {
+  .search-card,
+  .hero-content {
+    width: 100%;
+  }
+
+  .site-header .container {
+    gap: 0.75rem;
+  }
+}
