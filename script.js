@@ -1,4 +1,6 @@
-const jobs = [
+const API_BASE_URL = window.location.hostname === 'localhost' ? 'http://localhost:3000/api' : '/api';
+
+const defaultJobs = [
   {
     title: 'Desenvolvedor Front-end',
     company: 'TechNova',
@@ -64,6 +66,8 @@ const jobs = [
   },
 ];
 
+let jobs = [...defaultJobs];
+
 const jobsList = document.getElementById('jobs-list');
 const searchForm = document.getElementById('search-form');
 const keywordInput = document.getElementById('search-keyword');
@@ -111,6 +115,24 @@ function filterJobs(event) {
   renderJobs(filtered);
 }
 
+function loadJobsFromApi() {
+  fetch(`${API_BASE_URL}/jobs`)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Erro ao carregar vagas');
+      }
+      return response.json();
+    })
+    .then((data) => {
+      jobs = data;
+      renderJobs(jobs);
+    })
+    .catch((error) => {
+      console.warn('Falha ao carregar vagas do servidor:', error);
+      renderJobs(jobs);
+    });
+}
+
 function toggleAddJobPanel() {
   addJobPanel.classList.toggle('hidden');
   const isOpen = !addJobPanel.classList.contains('hidden');
@@ -133,30 +155,45 @@ function handleAddJob(event) {
     return;
   }
 
-  const newJob = { title, company, location, type, description };
+  const sendJob = (jobData) => {
+    fetch(`${API_BASE_URL}/jobs`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(jobData),
+    })
+      .then((response) => response.json())
+      .then((newJob) => {
+        jobs.unshift(newJob);
+        renderJobs(jobs);
+        addJobForm.reset();
+        addJobPanel.classList.add('hidden');
+        toggleAddJob.textContent = 'Adicionar vaga';
+      })
+      .catch((error) => {
+        console.error('Erro ao salvar vaga:', error);
+        alert('Não foi possível salvar a vaga no servidor. Tente novamente.');
+      });
+  };
+
+  const jobData = { title, company, location, type, description };
 
   if (imageFile) {
     const reader = new FileReader();
     reader.onload = () => {
-      newJob.imageUrl = reader.result;
-      jobs.unshift(newJob);
-      renderJobs(jobs);
-      addJobForm.reset();
-      addJobPanel.classList.add('hidden');
-      toggleAddJob.textContent = 'Adicionar vaga';
+      jobData.imageUrl = reader.result;
+      sendJob(jobData);
     };
     reader.readAsDataURL(imageFile);
     return;
   }
 
-  jobs.unshift(newJob);
-  renderJobs(jobs);
-  addJobForm.reset();
-  addJobPanel.classList.add('hidden');
-  toggleAddJob.textContent = 'Adicionar vaga';
+  sendJob(jobData);
 }
+
 
 searchForm.addEventListener('submit', filterJobs);
 toggleAddJob.addEventListener('click', toggleAddJobPanel);
 addJobForm.addEventListener('submit', handleAddJob);
-renderJobs(jobs);
+loadJobsFromApi();
