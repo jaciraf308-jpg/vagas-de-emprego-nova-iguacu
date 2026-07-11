@@ -1,4 +1,5 @@
 const API_BASE_URL = window.location.hostname === 'localhost' ? 'http://localhost:3000/api' : '/api';
+const STORAGE_KEY = 'vagasEmpregoLocalJobs';
 
 const defaultJobs = [
   {
@@ -100,6 +101,25 @@ function renderJobs(items) {
   });
 }
 
+function saveLocalJobs() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(jobs));
+}
+
+function loadLocalJobs() {
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if (!saved) {
+    return null;
+  }
+
+  try {
+    const parsed = JSON.parse(saved);
+    return Array.isArray(parsed) ? parsed : null;
+  } catch (error) {
+    console.warn('Erro ao ler vagas locais:', error);
+    return null;
+  }
+}
+
 function filterJobs(event) {
   event.preventDefault();
   const keyword = keywordInput.value.trim().toLowerCase();
@@ -115,6 +135,12 @@ function filterJobs(event) {
   renderJobs(filtered);
 }
 
+function setJobs(data) {
+  jobs = data;
+  renderJobs(jobs);
+  saveLocalJobs();
+}
+
 function loadJobsFromApi() {
   fetch(`${API_BASE_URL}/jobs`)
     .then((response) => {
@@ -124,11 +150,14 @@ function loadJobsFromApi() {
       return response.json();
     })
     .then((data) => {
-      jobs = data;
-      renderJobs(jobs);
+      setJobs(data);
     })
     .catch((error) => {
       console.warn('Falha ao carregar vagas do servidor:', error);
+      const localJobs = loadLocalJobs();
+      if (localJobs) {
+        jobs = localJobs;
+      }
       renderJobs(jobs);
     });
 }
@@ -137,6 +166,15 @@ function toggleAddJobPanel() {
   addJobPanel.classList.toggle('hidden');
   const isOpen = !addJobPanel.classList.contains('hidden');
   toggleAddJob.textContent = isOpen ? 'Fechar formulário' : 'Adicionar vaga';
+}
+
+function saveJobLocally(jobData) {
+  jobs.unshift(jobData);
+  saveLocalJobs();
+  renderJobs(jobs);
+  addJobForm.reset();
+  addJobPanel.classList.add('hidden');
+  toggleAddJob.textContent = 'Adicionar vaga';
 }
 
 function handleAddJob(event) {
@@ -155,7 +193,9 @@ function handleAddJob(event) {
     return;
   }
 
-  const sendJob = (jobData) => {
+  const jobData = { title, company, location, type, description };
+
+  const sendJob = () => {
     fetch(`${API_BASE_URL}/jobs`, {
       method: 'POST',
       headers: {
@@ -163,37 +203,41 @@ function handleAddJob(event) {
       },
       body: JSON.stringify(jobData),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Falha ao salvar no servidor');
+        }
+        return response.json();
+      })
       .then((newJob) => {
-        jobs.unshift(newJob);
-        renderJobs(jobs);
-        addJobForm.reset();
-        addJobPanel.classList.add('hidden');
-        toggleAddJob.textContent = 'Adicionar vaga';
+        setJobs([newJob, ...jobs]);
       })
       .catch((error) => {
-        console.error('Erro ao salvar vaga:', error);
-        alert('Não foi possível salvar a vaga no servidor. Tente novamente.');
+        console.warn('API indisponível, salvando localmente:', error);
+        saveJobLocally({ ...jobData, imageUrl: jobData.imageUrl || null, id: Date.now(), createdAt: new Date().toISOString() });
+        alert('Vaga salva localmente porque o servidor não está disponível.');
       });
   };
-
-  const jobData = { title, company, location, type, description };
 
   if (imageFile) {
     const reader = new FileReader();
     reader.onload = () => {
       jobData.imageUrl = reader.result;
-      sendJob(jobData);
+      sendJob();
     };
     reader.readAsDataURL(imageFile);
     return;
   }
 
-  sendJob(jobData);
+  sendJob();
 }
-
 
 searchForm.addEventListener('submit', filterJobs);
 toggleAddJob.addEventListener('click', toggleAddJobPanel);
 addJobForm.addEventListener('submit', handleAddJob);
+
+const localJobs = loadLocalJobs();
+if (localJobs) {
+  jobs = localJobs;
+}
 loadJobsFromApi();
